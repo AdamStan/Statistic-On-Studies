@@ -43,11 +43,12 @@ def calculate_standard_deviation_vetors(matrixes):
 
 def calculate_f_in_one_dimension(mean_vectors, std_vectors):
     f_results = {}
-    for i in range(len(mean_vectors) - 1):
-        for j in range(len(mean_vectors[0])):
-            numerator = math.fabs(mean_vectors[i].item(j) - mean_vectors[i+1].item(j))
-            denominator = std_vectors[i].item(j) + std_vectors[i+1].item(j)
-            f_results[str(i+1) + "_" + str(j+1)] = (numerator / denominator)
+    for a in range(len(mean_vectors) - 1):
+        for i in range(a, len(mean_vectors) - 1):
+            for j in range(len(mean_vectors[0])):
+                numerator = math.fabs(mean_vectors[i].item(j) - mean_vectors[i+1].item(j))
+                denominator = std_vectors[i].item(j) + std_vectors[i+1].item(j)
+                f_results[str(a+1) + "|" + str(i+1) + "_" + str(j+1)] = (numerator / denominator)
     
     return f_results
 

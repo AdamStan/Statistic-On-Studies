@@ -45,7 +45,7 @@ class TestClassification(unittest.TestCase):
         f_results = calculate_f_in_one_dimension(self.means_v, self.std_v)
         results = list(f_results.values())
         for i in range(len(self.f_in_one_dimension)):
-            self.assertEquals(self.f_in_one_dimension[i], results[i])
+            self.assertEqual(self.f_in_one_dimension[i], results[i])
 
 if __name__ == "__main__":
     unittest.main()
