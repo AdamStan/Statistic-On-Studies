@@ -29,6 +29,8 @@ class TestClassification(unittest.TestCase):
             (math.fabs(self.means_v[0].item(2) - self.means_v[1].item(2))) / (self.std_v [0].item(2) + self.std_v [1].item(2))
         ]
 
+        self.f_in_two_dimensions = [0.7402156063447579, 0.30000000000000004, 0.15973377703826958]
+
     def test_calculating_f_vector_one_dimension(self):
         print("TEST - calculating f in one dimension")
         f_results = calculate_f(self.matrixes[0], self.matrixes[1], 1)
@@ -38,14 +40,14 @@ class TestClassification(unittest.TestCase):
         for i in range(len(self.f_in_one_dimension)):
             self.assertEqual(self.f_in_one_dimension[i], results[i], msg=str(i))
 
-    # def test_calculating_f_vector_two_dimension(self):
-    #     print("TEST - calculating f in one dimension")
-    #     f_results = calculate_f(self.matrixes[0], self.matrixes[1], 1)
-    #     results = list(f_results.values())
-    #     print(self.f_in_one_dimension)
-    #     print(results)
-    #     for i in range(len(self.f_in_one_dimension)):
-    #         self.assertEqual(self.f_in_one_dimension[i], results[i], msg=str(i))
+    def test_calculating_f_vector_two_dimension(self):
+        print("TEST - calculating f in one dimension")
+        f_results = calculate_f(self.matrixes[0], self.matrixes[1], 2)
+        results = list(f_results.values())
+        print(self.f_in_two_dimensions)
+        print(results)
+        for i in range(len(self.f_in_one_dimension)):
+            self.assertEqual(self.f_in_two_dimensions[i], results[i], msg=str(i))
 
 
 if __name__ == "__main__":
