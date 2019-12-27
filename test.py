@@ -38,5 +38,15 @@ class TestClassification(unittest.TestCase):
         for i in range(len(self.f_in_one_dimension)):
             self.assertEqual(self.f_in_one_dimension[i], results[i], msg=str(i))
 
+    # def test_calculating_f_vector_two_dimension(self):
+    #     print("TEST - calculating f in one dimension")
+    #     f_results = calculate_f(self.matrixes[0], self.matrixes[1], 1)
+    #     results = list(f_results.values())
+    #     print(self.f_in_one_dimension)
+    #     print(results)
+    #     for i in range(len(self.f_in_one_dimension)):
+    #         self.assertEqual(self.f_in_one_dimension[i], results[i], msg=str(i))
+
+
 if __name__ == "__main__":
     unittest.main()

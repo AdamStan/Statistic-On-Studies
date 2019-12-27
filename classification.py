@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 
 def wspolczynnik_F_in_one_(matrix1, matrix2):
     """
@@ -43,20 +44,25 @@ def calculate_f(matrix1, matrix2, dimension=1):
     mean_vector2 = calculate_mean_vector(matrix2)
     print("Mean vector 2:" + str(mean_vector2))
     # calculate f
-    for j in range(len(mean_vector1)):
-        # distance between matrix 
-        numerator = np.linalg.norm(mean_vector1.item(j) - mean_vector2.item(j))
-        denominator = np.std(matrix1[j:j + dimension]) + np.std(matrix2[j:j + dimension])
-        f_results[str(dimension) + "_" + str(j+1)] = (numerator / denominator)
+    for j in range(dimension):
+        for i in range(j, len(mean_vector1)):
+            # distance between matrix 
+            numerator = np.linalg.norm(mean_vector1[i:i + dimension] - mean_vector2[i:i + dimension])
+            # sum of standard deviation
+            denominator = np.std(matrix1[i:i + dimension]) + np.std(matrix2[i:i + dimension])
+            f_results[str(j + 1) + "_" + str(i+1)] = (numerator / denominator)
     
     return f_results
 
 def main():
     # load parameters (dimension and SFS or F)
+    # 1 = F, 2 = SFS
+    dimension = int(sys.argv[1])
+    # which_method = sys.argv[2]
     # load matrixes from file
     matrixes_dict = load_matrixes()
     matrixes_val = list(matrixes_dict.values())
-    f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], 1)
+    f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
     print(f_in_one_dimension)
 
 if __name__ == "__main__":
