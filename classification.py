@@ -86,6 +86,57 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
     mean_vector1 = calculate_mean_vector(matrix1)
     mean_vector2 = calculate_mean_vector(matrix2)
     
+    the_best_diff = 0
+    the_best_coordinates = ()
+
+    for d in range(1, dimension + 1):
+        all_combinations = calculate_combinations(len(matrix1), d)
+        chosen_combinations = []
+
+        if the_best_coordinates:
+            for coordinates_candidate in all_combinations:
+                flag = True
+                for i in the_best_coordinates:
+                    flag = i in coordinates_candidate
+                    if not flag:
+                        break
+                if flag:
+                    chosen_combinations.append(coordinates_candidate)
+        
+        if not chosen_combinations:
+            chosen_combinations = all_combinations
+
+        print(chosen_combinations)
+        for coordinates in chosen_combinations:
+            temp_mean_vector1 = []
+            temp_mean_vector2 = []
+            temp_matrix1 = []
+            temp_matrix2 = []
+            for i in coordinates:
+                temp_mean_vector1.append(mean_vector1[i])
+                temp_mean_vector2.append(mean_vector2[i])
+                temp_matrix1.append(matrix1[i])
+                temp_matrix2.append(matrix2[i])
+            # distance between matrix
+            numerator = np.linalg.norm(np.array(temp_mean_vector1) - (np.array(temp_mean_vector2)))
+            
+            # sum of standard deviation
+            denominator = 0
+            if len(coordinates) > 1:
+                denominator = calculate_det_like_in_lesson(np.array(temp_matrix1)) + calculate_det_like_in_lesson(np.array(temp_matrix2))
+            else:
+                denominator = np.array(temp_matrix1).std() + np.array(temp_matrix2).std()
+            
+            f_results[coordinates] = (numerator / denominator)
+
+            if the_best_diff < f_results[coordinates]:
+                the_best_diff = f_results[coordinates]
+                the_best_coordinates = coordinates
+
+    print(the_best_coordinates)
+    print(the_best_diff)
+    return f_results
+    
 
 def main():
     # load parameters (dimension and SFS or F)
@@ -95,9 +146,9 @@ def main():
     # load matrixes from file
     matrixes_dict = load_matrixes()
     matrixes_val = list(matrixes_dict.values())
-    f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
-    print(f_in_one_dimension)
-
+    # f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
+    # print(f_in_one_dimension)
+    f_in_one_dimension = calculate_sfs(matrixes_val[0], matrixes_val[1], dimension)
 
 if __name__ == "__main__":
     main()
