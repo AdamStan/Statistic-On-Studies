@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 def wspolczynnik_F_in_one_(matrix1, matrix2):
     """
@@ -20,6 +19,7 @@ def load_matrixes(path_to_file = "Maple_Oak.txt"):
             numbers = line[1:]
             for i in range(len(numbers)):
                 numbers[i] = float(numbers[i])
+            name = name.split()[0]
             if name in matrixes:
                 matrixes[name] = np.append(matrixes.get(name), [numbers], axis = 0)
             else:
@@ -29,36 +29,34 @@ def load_matrixes(path_to_file = "Maple_Oak.txt"):
 
     return matrixes
 
-def calculate_mean_vectors(matrixes):
-    means = []
-    for matrix in matrixes:
-        means.append(matrix.mean(1))
-    return means
+def write_to_file(path_to_file = "results.txt"):
+    pass
 
-def calculate_standard_deviation_vetors(matrixes):
-    standard_deviations = []
-    for matrix in matrixes:
-        standard_deviations.append(matrix.std(1))
-    return standard_deviations
+def calculate_mean_vector(matrix):
+    return matrix.mean(1)
 
-def calculate_f_in_one_dimension(mean_vectors, std_vectors):
+def calculate_f(matrix1, matrix2, dimension=1):
     f_results = {}
-    for a in range(len(mean_vectors) - 1):
-        for i in range(a, len(mean_vectors) - 1):
-            for j in range(len(mean_vectors[0])):
-                numerator = math.fabs(mean_vectors[i].item(j) - mean_vectors[i+1].item(j))
-                denominator = std_vectors[i].item(j) + std_vectors[i+1].item(j)
-                f_results[str(a+1) + "|" + str(i+1) + "_" + str(j+1)] = (numerator / denominator)
+    # calculate mean vector
+    mean_vector1 = calculate_mean_vector(matrix1)
+    print("Mean vector 1:" + str(mean_vector1))
+    mean_vector2 = calculate_mean_vector(matrix2)
+    print("Mean vector 2:" + str(mean_vector2))
+    # calculate f
+    for j in range(len(mean_vector1)):
+        # distance between matrix 
+        numerator = np.linalg.norm(mean_vector1.item(j) - mean_vector2.item(j))
+        denominator = np.std(matrix1[j:j + dimension]) + np.std(matrix2[j:j + dimension])
+        f_results[str(dimension) + "_" + str(j+1)] = (numerator / denominator)
     
     return f_results
 
 def main():
-    matrixes = load_matrixes()
-    mean_vecotors = calculate_mean_vectors(matrixes.values())
-    std_vectors = calculate_standard_deviation_vetors(matrixes.values())
-    f_in_one_dimension = calculate_f_in_one_dimension(mean_vecotors, std_vectors)
-    print(mean_vecotors)
-    print(std_vectors)
+    # load parameters (dimension and SFS or F)
+    # load matrixes from file
+    matrixes_dict = load_matrixes()
+    matrixes_val = list(matrixes_dict.values())
+    f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], 1)
     print(f_in_one_dimension)
 
 if __name__ == "__main__":
