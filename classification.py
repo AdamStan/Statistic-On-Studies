@@ -106,7 +106,6 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
         if not chosen_combinations:
             chosen_combinations = all_combinations
 
-        print(chosen_combinations)
         for coordinates in chosen_combinations:
             temp_mean_vector1 = []
             temp_mean_vector2 = []
@@ -137,7 +136,16 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
     print(the_best_diff)
     return f_results
     
-
+# parameters:
+# n - procentes for testing
+# selection - Fisher or SFS
+# c - number of characteristics
+# k - for NN and NM
+# classification - NN or NM
+# 1. divide on two sets, learning and testing
+# 2. characteristics selection
+# 3. classification
+# 4. testing on testing set
 def main():
     # load parameters (dimension and SFS or F)
     # 1 = F, 2 = SFS
@@ -146,9 +154,11 @@ def main():
     # load matrixes from file
     matrixes_dict = load_matrixes()
     matrixes_val = list(matrixes_dict.values())
+    matrix_in_correct_way1 = np.transpose(matrixes_val[0])
+    matrix_in_correct_way2 = np.transpose(matrixes_val[1])
     # f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
     # print(f_in_one_dimension)
-    f_in_one_dimension = calculate_sfs(matrixes_val[0], matrixes_val[1], dimension)
+    f_in_one_dimension = calculate_sfs(matrix_in_correct_way1, matrix_in_correct_way2, dimension)
 
 if __name__ == "__main__":
     main()
