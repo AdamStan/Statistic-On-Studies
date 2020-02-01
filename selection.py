@@ -57,7 +57,7 @@ def calculate_f(matrix1, matrix2, dimension=1):
             the_best_result = f_results[coordinates]
             the_best_coordinates = coordinates
 
-    print("The best coordinates (f): " + str(the_best_coordinates))
+    # print("The best coordinates (f): " + str(the_best_coordinates))
     return the_best_coordinates
 
 
@@ -67,12 +67,12 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
     mean_vector1 = calculate_mean_vector(matrix1)
     mean_vector2 = calculate_mean_vector(matrix2)
     
-
     the_best_diff = 0
     the_best_coordinates = ()
     for d in range(1, dimension + 1):
         # refresh value
         the_best_diff = 0
+        # print(d)
         # get all possible combinations
         all_combinations = calculate_combinations(len(matrix1), d)
         chosen_combinations = []
@@ -106,10 +106,13 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
             # sum of standard deviation
             denominator = 0
             if len(coordinates) > 1:
+                # print("Macierz: " + str(temp_matrix1))
+                # print("Wyznacznik macierzy: " + str(calculate_det_like_in_lesson(np.array(temp_matrix1))))
                 denominator = calculate_det_like_in_lesson(np.array(temp_matrix1)) + calculate_det_like_in_lesson(np.array(temp_matrix2))
             else:
                 denominator = np.array(temp_matrix1).std() + np.array(temp_matrix2).std()
             
+            # print(f_results)
             f_results[coordinates] = (numerator / denominator)
             # print(f_results)
             if the_best_diff < f_results[coordinates]:
@@ -118,5 +121,5 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
                 # print("On: " + str(coordinates))
                 the_best_coordinates = coordinates
 
-    print("The best coordinates (sfs): " + str(the_best_coordinates))
+    # print("The best coordinates (sfs): " + str(the_best_coordinates))
     return the_best_coordinates

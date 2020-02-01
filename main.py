@@ -62,20 +62,17 @@ def divide_set_and_transpose(matrix, procent_to_training_set):
 # 4. testing on testing set
 def main():
     # load parameters (dimension and SFS or F)
-    traing_set = 20
-    selection = "SFS" # SFS
-    dimension = 3
-    which_algo = "NN" # MN
+    traning_set = 20
+    selection = "SFS" # SFS / F
+    dimension = 2
+    which_algo = "MN" # MN / NN
     k = 3
     # load matrixes from file
     matrixes_dict = load_matrixes()
     matrixes_val = list(matrixes_dict.values())
     
-    learning_set1, testing_set1 = divide_set_and_transpose(matrixes_val[0], traing_set)
-    learning_set2, testing_set2 = divide_set_and_transpose(matrixes_val[1], traing_set)
-    # f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
-    # print(learning_set2.shape)
-    # print(testing_set2.shape)
+    learning_set1, testing_set1 = divide_set_and_transpose(matrixes_val[0], traning_set)
+    learning_set2, testing_set2 = divide_set_and_transpose(matrixes_val[1], traning_set)
 
     result = None
     if (selection == "SFS"):
@@ -91,9 +88,10 @@ def main():
             print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
             print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
         elif which_algo == "MN":
-            classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
-            classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
-
+            result1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
+            result2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
+            print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
+            print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
 
 if __name__ == "__main__":
     main()

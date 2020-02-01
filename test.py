@@ -2,6 +2,7 @@ import numpy as np
 import math
 from selection import calculate_f, calculate_sfs
 from main import divide_set_and_transpose
+from classification import calculate_distances, classification_using_NN, classification_using_nearest_mean
 import unittest
 
 class TestSelection(unittest.TestCase):
@@ -34,22 +35,18 @@ class TestSelection(unittest.TestCase):
 
     def test_calculating_f_vector_one_dimension(self):
         f_result = calculate_f(self.matrixes[0], self.matrixes[1], 1)
-        # print(f_result)
         self.assertEqual(f_result, (1,))
 
     def test_calculating_f_vector_two_dimension(self):
         f_result = calculate_f(self.matrixes[0], self.matrixes[1], 2)
-        # print(f_result)
         self.assertEqual(f_result, (0,1))
 
     def test_calculating_sfs_in_one_dimension(self):
         sfs_resullt = calculate_sfs(self.matrixes[0], self.matrixes[1], 1)
-        # print(sfs_resullt)
         self.assertEqual(sfs_resullt, (1,))
 
     def test_calculating_sfs_in_two_dimension(self):
         sfs_resullt = calculate_sfs(self.matrixes[0], self.matrixes[1], 2)
-        # print(sfs_resullt)
         self.assertEqual(sfs_resullt, (0,1))
 
 class TestMainHelpFunctions(unittest.TestCase):
@@ -73,6 +70,19 @@ class TestMainHelpFunctions(unittest.TestCase):
         self.assertEqual(learning_set.shape, (5,8))
         self.assertEqual(training_set.shape, (5,2))
 
+class TestClassificationNN(unittest.TestCase):
+    def setUp(self):
+        self.A = np.array([[1, 2, 2, 4], [2, 5, 5, 7], [3, 3, 4, 5]])
+        self.B = np.array([[1, 3, 3, 5], [7, 9, 8, 6], [1, 1, 2, 1]])
+        self.x1 = np.array([[1], [7], [3]])
+
+    def test1(self):
+        result = classification_using_NN(self.B, self.A, self.x1, (0,1,2), 3, 1)
+        self.assertEqual(1, result)
+    
+    def test2(self):
+        result = classification_using_NN(self.B, self.A, self.x1, (0,1,2), 3, 3)
+        self.assertEqual(0, result)
 
 if __name__ == "__main__":
     unittest.main()
