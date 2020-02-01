@@ -74,24 +74,22 @@ def main():
     learning_set1, testing_set1 = divide_set_and_transpose(matrixes_val[0], traning_set)
     learning_set2, testing_set2 = divide_set_and_transpose(matrixes_val[1], traning_set)
 
-    result = None
+    coordinates = None
     if (selection == "SFS"):
-        result = calculate_sfs(learning_set1, learning_set2, dimension)
+        coordinates = calculate_sfs(learning_set1, learning_set2, dimension)
     elif selection == "F":
-        result = calculate_f(learning_set1, learning_set2, dimension)
+        coordinates = calculate_f(learning_set1, learning_set2, dimension)
 
-    if result is not None:
-        best_coordinates = result
-        if which_algo == "NN":
-            result1 = classification_using_NN(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
-            result2 = classification_using_NN(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
-            print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
-            print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
-        elif which_algo == "MN":
-            result1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
-            result2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
-            print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
-            print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
+    if which_algo == "NN":
+        result1 = classification_using_NN(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
+        result2 = classification_using_NN(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
+        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
+        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
+    elif which_algo == "MN":
+        result1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
+        result2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
+        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
+        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
 
 if __name__ == "__main__":
     main()

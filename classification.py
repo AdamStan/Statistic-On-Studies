@@ -62,14 +62,17 @@ def classification_using_NN(matrix_to_match, matrix_to_disturb, test, best_coord
     return match_to_first_matrix
 
 def equal_for_divide_on_k_matrixes(group_matrix1, group_matrix2):
-    for i in range(len(group_matrix1)):
-        for j in range(len(group_matrix1[i])):
-            if group_matrix1[i][j][0] == group_matrix2[i][j][0] \
-                    and group_matrix1[i][j][1] == group_matrix2[i][j][1]:
-                continue
-            else:
-                return False
-    return True
+    try:
+        for i in range(len(group_matrix1)):
+            for j in range(len(group_matrix1[i])):
+                if group_matrix1[i][j][0] == group_matrix2[i][j][0] \
+                        and group_matrix1[i][j][1] == group_matrix2[i][j][1]:
+                    continue
+                else:
+                    return False
+        return True
+    except Exception:
+        return False
 
 def divide_on_k_matrixes(matrix_to_divide, how_many_matrixes):
     matrixes = []
@@ -100,8 +103,8 @@ def divide_on_k_matrixes(matrix_to_divide, how_many_matrixes):
     
     while True:
         new_groups = []
-        print(matrixes)
-        print("====================")
+        # print(matrixes)
+        # print("====================")
         for i in range(how_many_matrixes):
             new_groups.append([])
         for group_to_use in matrixes:
@@ -168,11 +171,31 @@ def classification_using_nearest_mean(matrix_to_match, matrix_to_disturb, test, 
         k_matrixes_to_dist.append(more_suitable_dist)
 
     # policzenie odleglosci od srednich
-    
 
-    recognize_correctly = 0
+    mean_vector_match = []
+    mean_vector_dist = []
+    for array_matches in k_matrixes_to_match:
+        mean_vector_match.append(array_matches.mean(0))
+    for array_dist in k_matrixes_to_dist:
+        mean_vector_dist.append(array_dist.mean(0))
+    # print(mean_vector_match)
+
     # main loop
     for test_index in range(0, len(test_list[0])):
         test_point = get_point(test_list, dimension, test_index)
+        distances_from_match = calculate_distances(test_point, mean_vector_match)
+        distances_from_dist = calculate_distances(test_point, mean_vector_dist)
+        match_index = 0
+        dist_index = 0
+        # print("match: " + str(distances_from_match))
+        # print("Dist: " + str(distances_from_dist))
+        for i in range(0, k):
+            if(distances_from_match[match_index] < distances_from_dist[dist_index]):
+                match_index += 1
+            else:
+                dist_index += 1
+        # print("match: " + str(match_index) + " Not match: " + str(dist_index))
+        if match_index > dist_index:
+            correctly_recognized += 1
 
     return correctly_recognized / amount_of_test
