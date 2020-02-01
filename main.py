@@ -43,9 +43,9 @@ def divide_set_and_transpose(matrix, procent_to_training_set):
             training_set = np.array([learning_set[random_index]])
         else:
             training_set = np.append(training_set, [learning_set[random_index]], axis = 0)
-        print(training_set.shape)
+        # print(training_set.shape)
         learning_set = np.delete(learning_set, random_index, axis = 0)
-        print(learning_set.shape)
+        # print(learning_set.shape)
 
     return np.transpose(learning_set), np.transpose(training_set)
 
@@ -62,12 +62,11 @@ def divide_set_and_transpose(matrix, procent_to_training_set):
 # 4. testing on testing set
 def main():
     # load parameters (dimension and SFS or F)
-    # 1 = F, 2 = SFS
     traing_set = 20
     selection = "SFS" # SFS
     dimension = 3
     which_algo = "NN" # MN
-    k = 1
+    k = 3
     # load matrixes from file
     matrixes_dict = load_matrixes()
     matrixes_val = list(matrixes_dict.values())
@@ -75,8 +74,8 @@ def main():
     learning_set1, testing_set1 = divide_set_and_transpose(matrixes_val[0], traing_set)
     learning_set2, testing_set2 = divide_set_and_transpose(matrixes_val[1], traing_set)
     # f_in_one_dimension = calculate_f(matrixes_val[0], matrixes_val[1], dimension)
-    print(learning_set2.shape)
-    print(testing_set2.shape)
+    # print(learning_set2.shape)
+    # print(testing_set2.shape)
 
     result = None
     if (selection == "SFS"):
@@ -87,13 +86,13 @@ def main():
     if result is not None:
         best_coordinates = result
         if which_algo == "NN":
-            classification_using_NN(learning_set1, learning_set2, testing_set1, best_coordinates, k)
-            classification_using_NN(learning_set1, learning_set2, testing_set2, best_coordinates, k)
+            result1 = classification_using_NN(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
+            result2 = classification_using_NN(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
+            print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
+            print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
         elif which_algo == "MN":
-            classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, best_coordinates, k)
-            classification_using_nearest_mean(learning_set1, learning_set2, testing_set2, best_coordinates, k)
-    
-    print(result)
+            classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, best_coordinates, dimension, k)
+            classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, best_coordinates, dimension, k)
 
 
 if __name__ == "__main__":
