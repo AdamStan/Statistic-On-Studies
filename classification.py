@@ -22,26 +22,28 @@ def classification_using_NN(matrix_to_match, matrix_to_disturb, test, best_coord
     disturb_list = []
     # print(dimension)
     # creating test list, match list, disturb list
+    # print(test)
     for i in range(0, dimension):
         # print(best_coordinates[i])
         test_list.append(test[best_coordinates[i]])
         match_list.append(matrix_to_match[best_coordinates[i]])
         disturb_list.append(matrix_to_disturb[best_coordinates[i]])
-
     # print(test_list)
-    # print(len(test_list))
+    # print(disturb_list)
+    # print(len(disturb_list))
     more_suitable_match = []
     for match_index in range(0, len(match_list[0])):
         more_suitable_match.append(get_point(match_list, dimension, match_index))
-
     more_suitable_dist = []
     for dist_index in range(0, len(disturb_list[0])):
         more_suitable_dist.append(get_point(disturb_list, dimension, dist_index))
-    
+    # print(len(disturb_list[0]))
+    # print(more_suitable_dist)
     recognize_correctly = 0
     # main loop
     for test_index in range(0, len(test_list[0])):
         test_point = get_point(test_list, dimension, test_index)
+        # print(test_point)
         distances_from_match = calculate_distances(test_point, more_suitable_match)
         distances_from_dist = calculate_distances(test_point, more_suitable_dist)
         match_index = 0

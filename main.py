@@ -59,11 +59,9 @@ def divide_set_and_transpose(matrix, procent_to_training_set):
 # 1. divide on two sets, learning and testing
 # 2. characteristics selection
 # 3. classification
-# 4. testing on testing set
 def main():
-    # load parameters (dimension and SFS or F)
     traning_set = 20
-    selection = "SFS" # SFS / F
+    selection = "F" # SFS / F
     dimension = 2
     which_algo = "MN" # MN / NN
     k = 3
@@ -81,11 +79,13 @@ def main():
         coordinates = calculate_f(learning_set1, learning_set2, dimension)
 
     if which_algo == "NN":
+        print("Uzywam NN")
         result1 = classification_using_NN(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
         result2 = classification_using_NN(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
         print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
         print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
     elif which_algo == "MN":
+        print("Uzywam Mean Nearest")
         result1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
         result2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
         print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))

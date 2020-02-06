@@ -57,7 +57,7 @@ def calculate_f(matrix1, matrix2, dimension=1):
             the_best_result = f_results[coordinates]
             the_best_coordinates = coordinates
 
-    # print("The best coordinates (f): " + str(the_best_coordinates))
+    print("The best coordinates (f): " + str(the_best_coordinates))
     return the_best_coordinates
 
 
@@ -121,5 +121,5 @@ def calculate_sfs(matrix1, matrix2, dimension=1):
                 # print("On: " + str(coordinates))
                 the_best_coordinates = coordinates
 
-    # print("The best coordinates (sfs): " + str(the_best_coordinates))
+    print("The best coordinates (sfs): " + str(the_best_coordinates))
     return the_best_coordinates

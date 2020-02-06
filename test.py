@@ -74,7 +74,7 @@ class TestClassificationNN(unittest.TestCase):
     def setUp(self):
         self.A = np.array([[1, 2, 2, 4], [2, 5, 5, 7], [3, 3, 4, 5]])
         self.B = np.array([[1, 3, 3, 5], [7, 9, 8, 6], [1, 1, 2, 1]])
-        self.x1 = np.array([[1], [7], [3]])
+        self.x1 = np.array([[1, 2], [7, 2], [3, 2]])
 
     def test1(self):
         result = classification_using_NN(self.B, self.A, self.x1, (0,1,2), 3, 1)
