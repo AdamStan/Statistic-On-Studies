@@ -61,9 +61,9 @@ def divide_set_and_transpose(matrix, procent_to_training_set):
 # 3. classification
 def main():
     traning_set = 20
-    selection = "F" # SFS / F
-    dimension = 2
-    which_algo = "MN" # MN / NN
+    selection = "SFS" # SFS / F
+    dimension = 3
+    which_algo = "NN" # MN / NN
     k = 3
     # load matrixes from file
     matrixes_dict = load_matrixes()
@@ -71,7 +71,10 @@ def main():
     
     learning_set1, testing_set1 = divide_set_and_transpose(matrixes_val[0], traning_set)
     learning_set2, testing_set2 = divide_set_and_transpose(matrixes_val[1], traning_set)
-
+    print(learning_set1.shape)
+    print(testing_set1.shape)
+    print(learning_set2.shape)
+    print(testing_set2.shape)
     coordinates = None
     if (selection == "SFS"):
         coordinates = calculate_sfs(learning_set1, learning_set2, dimension)

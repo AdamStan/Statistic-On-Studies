@@ -51,7 +51,7 @@ def classification_using_NN(matrix_to_match, matrix_to_disturb, test, best_coord
         # print("match: " + str(distances_from_match))
         # print("Dist: " + str(distances_from_dist))
         for i in range(0, k):
-            if(distances_from_match[match_index] < distances_from_dist[dist_index]):
+            if(distances_from_match[match_index] <= distances_from_dist[dist_index]):
                 match_index += 1
             else:
                 dist_index += 1
@@ -192,7 +192,7 @@ def classification_using_nearest_mean(matrix_to_match, matrix_to_disturb, test, 
         # print("match: " + str(distances_from_match))
         # print("Dist: " + str(distances_from_dist))
         for i in range(0, k):
-            if(distances_from_match[match_index] < distances_from_dist[dist_index]):
+            if(distances_from_match[match_index] <= distances_from_dist[dist_index]):
                 match_index += 1
             else:
                 dist_index += 1
