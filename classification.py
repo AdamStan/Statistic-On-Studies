@@ -60,8 +60,7 @@ def classification_using_NN(matrix_to_match, matrix_to_disturb, test, best_coord
             recognize_correctly += 1
     # print("Poprawnie rozpoznane: " + str(recognize_correctly))
     # print("Wszystkie testowe: " + str(amount_of_test))
-    match_to_first_matrix = recognize_correctly / amount_of_test
-    return match_to_first_matrix
+    return recognize_correctly, amount_of_test
 
 def equal_for_divide_on_k_matrixes(group_matrix1, group_matrix2):
     try:
@@ -200,4 +199,4 @@ def classification_using_nearest_mean(matrix_to_match, matrix_to_disturb, test, 
         if match_index > dist_index:
             correctly_recognized += 1
 
-    return correctly_recognized / amount_of_test
+    return correctly_recognized, amount_of_test

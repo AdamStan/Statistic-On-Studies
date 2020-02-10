@@ -83,16 +83,18 @@ def main():
 
     if which_algo == "NN":
         print("Uzywam NN")
-        result1 = classification_using_NN(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
-        result2 = classification_using_NN(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
-        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
-        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
+        dobrze1, calkowita1 = classification_using_NN(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
+        dobrze2, calkowita2 = classification_using_NN(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
+        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(dobrze1 / calkowita1))
+        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(dobrze2 / calkowita2))
+        print("Łączna skuteczność: " + str((dobrze1 + dobrze2)/(calkowita1 + calkowita2)))
     elif which_algo == "MN":
         print("Uzywam Mean Nearest")
-        result1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
-        result2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
-        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(result1))
-        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(result2))
+        dobrze1, calkowita1 = classification_using_nearest_mean(learning_set1, learning_set2, testing_set1, coordinates, dimension, k)
+        dobrze2, calkowita2 = classification_using_nearest_mean(learning_set2, learning_set1, testing_set2, coordinates, dimension, k)
+        print("Dopasowanie do macierzy pierwszej (Acer)= " + str(dobrze1 / calkowita1))
+        print("Dopasowanie do macierzy drugiej (Quercus)= " + str(dobrze2 / calkowita2))
+        print("Łączna skuteczność: " + str((dobrze1 + dobrze2)/(calkowita1 + calkowita2)))
 
 if __name__ == "__main__":
     main()
